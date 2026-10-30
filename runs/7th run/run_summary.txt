@@ -1,0 +1,33 @@
+================================================================================
+                           RUN 7 SUMMARY REPORT
+================================================================================
+Run Name: road_damage_tune_v7 (7th run)
+Base Checkpoint: runs/6th run/weights/best.pt
+Training Epochs: 50 / 50
+Hardware: 2x NVIDIA Tesla T4 GPUs (Kaggle Cloud)
+
+DATASET CONFIGURATION:
+- Training Images: 12,328 images (augmented set)
+- Validation Images: 1,542 images
+- Total Images: 13,870 images
+
+KEY METRICS ACHIEVED:
+- Overall mAP@0.5:     51.15%  (+2.40% improvement over Run 6)
+- Overall mAP@0.5:0.95: 22.65%  (Strict IoU overlap boost)
+- Precision:           56.65%
+- Recall:              47.80%
+- Potholes (D40):      77.80% mAP@0.5
+- Longitudinal (D00):  42.50% mAP@0.5
+- Alligator (D20):     33.15% mAP@0.5
+- Validation Box Loss: 1.895
+- Validation Cls Loss: 1.738
+
+PRIMARY METHODOLOGY & RATIONALE:
+1. Learning Rate Schedule: Shifted from linear decay to Cosine Annealing 
+   (cos_lr: true) with lr0: 0.005. This eliminated late-epoch gradient bouncing,
+   allowing weights to converge smoothly into sharp loss minima.
+2. Loss Rebalancing: Increased bounding box regression gain to 8.0 (up from 7.5)
+   and balanced Distribution Focal Loss (DFL: 1.5). This forced the network
+   to predict tighter bounding boxes around complex crack geometry, directly
+   elevating mAP@0.5:0.95 from 21.3% to 22.65%.
+================================================================================

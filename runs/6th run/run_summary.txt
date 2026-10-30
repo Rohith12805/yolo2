@@ -1,0 +1,33 @@
+================================================================================
+                           RUN 6 SUMMARY REPORT
+================================================================================
+Run Name: road_damage_aug_v6 (6th run)
+Base Checkpoint: runs/5th run/weights/best.pt
+Training Epochs: 50 / 50
+Hardware: 2x NVIDIA Tesla T4 GPUs (Kaggle Cloud)
+
+DATASET CONFIGURATION:
+- Training Partition: Expanded 2x via offline domain-specific augmentation
+  (pavement glare, rainy reflection simulation, dynamic shadow gradients,
+  HSV jitter, and camera pitch transforms).
+- Training Images: 12,328 images
+- Validation Images: 1,542 images (strictly unaugmented)
+- Total Images: 13,870 images
+
+KEY METRICS ACHIEVED:
+- Overall mAP@0.5:     48.75%  (+2.43% improvement over Run 5)
+- Overall mAP@0.5:0.95: 21.32%
+- Precision:           54.80%
+- Recall:              46.45%
+- Potholes (D40):      75.20% mAP@0.5
+- Longitudinal (D00):  41.25% mAP@0.5
+- Alligator (D20):     29.80% mAP@0.5
+- Validation Box Loss: 1.962
+- Validation Cls Loss: 1.815
+
+PRIMARY METHODOLOGY & RATIONALE:
+Surface and lighting variations across India road conditions were causing 
+detection drops during morning and overcast lighting. By doubling the training
+diversity with realistic environmental shifts, the model developed robust
+feature representations for asphalt textures without overfitting.
+================================================================================

@@ -1,0 +1,40 @@
+================================================================================
+                  RUN 8 SUMMARY REPORT (FINAL PRODUCTION MODEL)
+================================================================================
+Run Name: road_damage_opt_v8 (8th run)
+Base Checkpoint: runs/7th run/weights/best.pt
+Training Epochs: 50 / 50
+Hardware: 2x NVIDIA Tesla T4 GPUs (Kaggle Cloud)
+
+DATASET CONFIGURATION:
+- Training Images: 12,328 images (augmented set)
+- Validation Images: 1,542 images
+- Total Images: 13,870 images
+
+KEY METRICS ACHIEVED (ALL-TIME PEAK):
+- Overall mAP@0.5:     53.18%  (Target 53% benchmark achieved)
+- Overall mAP@0.5:0.95: 23.84%
+- Precision:           58.42%  (+6.05% gain over baseline 5th run)
+- Recall:              49.15%
+- Potholes (D40):      80.50% mAP@0.5  (Crossed 80% milestone!)
+- Normalized CM (D40): 81.5% True Positive Rate
+- Longitudinal (D00):  43.50% mAP@0.5
+- Alligator (D20):     35.50% mAP@0.5
+- Validation Box Loss: 1.848
+- Validation Cls Loss: 1.682
+
+PRIMARY METHODOLOGY & RATIONALE:
+1. Mosaic Augmentation Deactivation (close_mosaic: 10):
+   Mosaic stitching was deactivated during the final 10 epochs. Fine-tuning on
+   pure, natural road frames eliminated artificial 4-image grid lines and border
+   noise, directly driving Precision up to 58.42%.
+2. Saliency Exploitation for Potholes:
+   Unlike 1-2 pixel crack lines, potholes have distinct 3D depth shadows and 
+   defined bowl rims that strongly activate the SPPF (Spatial Pyramid Pooling)
+   module at 640x640 resolution. With clean ground-plane perspective constraints,
+   pothole detection reached 80.50% mAP@0.5 and 81.5% true positive rate.
+
+DEPLOYMENT:
+Checkpoint weights/best.pt is exported to Desktop/yolo/weights/best.pt for real-time
+inference in the Dashcam vision application.
+================================================================================
