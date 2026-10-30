@@ -1,0 +1,87 @@
+================================================================================
+                    YOLO ROAD DAMAGE DETECTION PROJECT DETAILS
+================================================================================
+
+1. DATASET
+--------------------------------------------------------------------------------
+Dataset name:
+Road Damage Dataset (RDD2020 / RDD2022 - India Subset)
+
+Total number of images:
+7,706 images
+
+Training images:
+6,164 images (80% split)
+
+Validation images:
+1,542 images (20% split)
+
+Testing images:
+0 (Evaluated directly on the 1,542 validation images)
+
+Damage classes detected:
+Final Production Model (3 Classes):
+  - D00: Longitudinal Crack (Wheel mark crack)
+  - D20: Alligator Crack (Mesh / Fatigue crack)
+  - D40: Pothole / Rutting / Bump
+(Note: Initial training phases 1-4 also included D10: Transverse Crack, which
+ was removed in the final run to resolve label ambiguity and maximize detection accuracy).
+
+
+2. MODEL AND TRAINING
+--------------------------------------------------------------------------------
+YOLOv11 variant:
+YOLOv11n (Nano variant - 2.59M parameters, 6.5 GFLOPs)
+
+Number of epochs:
+50 epochs (Final production training run; 150 cumulative epochs across pipeline)
+
+Image size:
+640 x 640 pixels (App inference also supports 512 x 512)
+
+Training platform:
+Other (Kaggle Notebooks Cloud GPU) for final runs; initial runs on Local PC
+
+GPU used:
+2x NVIDIA Tesla T4 GPUs (Dual GPU, device: 0,1 on Kaggle)
+
+
+3. EXPERIMENTAL RESULTS (Final Model - 5th Run / three_class_training-3)
+--------------------------------------------------------------------------------
+Precision:
+0.524 (52.37%)
+
+Recall:
+0.446 (44.55%)
+
+mAP@0.5:
+0.463 (46.32%)
+
+mAP@0.5:0.95:
+0.200 (19.97%)
+
+Training time:
+~51.3 minutes (3,078.85 seconds on dual Tesla T4 GPUs)
+[Cumulative training across all 5 fine-tuning runs: ~32.4 hours]
+
+Inference speed:
+- Local CPU (640x640): ~55.6 ms inference / frame (~15.1 FPS)
+- Local CPU (512x512): ~38.0 ms inference / frame (~26.3 FPS)
+- NVIDIA GPU (T4 / RTX): ~2.5 ms - 5.0 ms inference / frame (~200+ FPS)
+
+
+================================================================================
+           PROGRESSION SUMMARY ACROSS THE 5 MOVED RUNS (IN RUNS FOLDER)
+================================================================================
+1st run (road_damage_main):
+  - Epochs: 15/30 | Platform: Local PC | Classes: 4 | mAP@0.5: 23.21%
+2nd run (road_damage_phase2):
+  - Epochs: 15/35 | Platform: Local PC | Classes: 4 | mAP@0.5: 26.90%
+3rd run (road_damage_phase3):
+  - Epochs: 20/20 | Platform: Local PC | Classes: 4 | mAP@0.5: 31.53%
+4th run (fine_tune_final):
+  - Epochs: 50/50 | Platform: Kaggle GPU (Dual T4) | Classes: 4 | mAP@0.5: 34.27%
+5th run (three_class_training-3) [FINAL / BEST MODEL]:
+  - Epochs: 50/50 | Platform: Kaggle GPU (Dual T4) | Classes: 3 | mAP@0.5: 46.32%
+================================================================================
+
